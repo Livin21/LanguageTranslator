@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextInputLayout inputLayout;
 
+    String languageCode = "ta"; //Tamil
+
 
     public static final int VOLLEY_REQUEST_TIMEOUT = 10000;
     public static final int VOLLEY_REQUEST_RETRIES = 2;
@@ -53,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
 
                 String textToTranslate = input.getText().toString();
 
-                final Snackbar snackbar = Snackbar.make(view, "Translating \"" + textToTranslate + "\" to Tamil... Please wait...", Snackbar.LENGTH_INDEFINITE)
+                final Snackbar snackbar = Snackbar.make(view, "Translating \"" + textToTranslate + "\" to Tamil... Please wait...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null);
                 snackbar.show();
 
                 textToTranslate = URLEncoder.encode(textToTranslate);
 
-                String url = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyDi7B2_f2GLZ9kNI0gY3CD8PJbJQtJEIdQ&source=en&target=ta&q=".concat(textToTranslate);
+                String url = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyDi7B2_f2GLZ9kNI0gY3CD8PJbJQtJEIdQ&source=en&target=".concat(languageCode).concat("&q=").concat(textToTranslate);
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                         Request.Method.GET,
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 try {
                                     snackbar.setText("Success");
-                                    snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                                    snackbar.show();
                                     String translatedText = response.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText");
                                     output.setText(translatedText);
                                 } catch (JSONException e) {
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 snackbar.setText("Please check your connection...");
-                                snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                                snackbar.show();
                             }
                         }
                 );

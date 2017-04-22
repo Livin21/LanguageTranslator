@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:gravity="center"
+            android:hint="@string/translated_text_will_appear_here"
             android:id="@+id/translatedTextView"
             android:layout_marginTop="10dp"
             />
